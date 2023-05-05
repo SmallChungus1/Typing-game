@@ -2,7 +2,10 @@ const quoteUrl = 'http://api.quotable.io/random'
 const quoteDisplayElement = document.getElementById('quoteDisplay')
 const quoteInputElement = document.getElementById('quoteInput')
 const timerElement = document.getElementById('timer')
+const pauseElement = document.getElementById('pauseBtn')
+
 let correct = true
+let pause = false
 
 quoteInputElement.addEventListener('input', ()=> {
     const arrayChar = quoteDisplayElement.querySelectorAll('span')
@@ -55,7 +58,10 @@ function startTimer(){
     timerElement.innerText = 0
     startTime = new Date()
     setInterval(()=>{
-        timer.innerText = getTimerTime()
+        if(pause == false){
+            timer.innerText = getTimerTime()
+        }
+        
     }, 1000)
 
 }
@@ -64,4 +70,20 @@ function getTimerTime(){
     return Math.floor((new Date() - startTime) / 1000)
 }
 
+
 generateNewQuote()
+
+function pauseGame(){
+    if(pause == false){
+     pause = true;
+     pauseElement.innerHTML = 'Resume'
+     quoteInputElement.disabled = true
+ 
+    }else{
+        pause = false;
+     pauseElement.innerHTML = 'Pause'
+     quoteInputElement.disabled = false
+    }
+     
+ 
+ }
