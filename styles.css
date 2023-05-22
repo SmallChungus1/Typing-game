@@ -63,6 +63,7 @@ font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 .incorrect{
     color: red;
     text-decoration: underline;
+    background: lightgray;
 }
 .buttons{
     text-align: center;
