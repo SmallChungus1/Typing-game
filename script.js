@@ -3,9 +3,13 @@ const quoteDisplayElement = document.getElementById('quoteDisplay')
 const quoteInputElement = document.getElementById('quoteInput')
 const timerElement = document.getElementById('timer')
 const pauseElement = document.getElementById('pauseBtn')
+const wpm = document.getElementById('wpm-info')
 
 let correct = true
 let pause = false
+let sessionTime = 0
+let countingInterval
+
 
 quoteInputElement.addEventListener('input', ()=> {
     const arrayChar = quoteDisplayElement.querySelectorAll('span')
@@ -29,7 +33,10 @@ quoteInputElement.addEventListener('input', ()=> {
 
     })
 
-    if (correct) generateNewQuote()
+    if (correct) {
+        clearInterval(countingInterval)
+        generateNewQuote()
+    }
 
 })
 
@@ -42,6 +49,8 @@ function getQuote(){
 
 async function generateNewQuote() {
     const quote = await getQuote()
+    wordCount = wordsSplit(quote)
+    wpmCount(wordCount, sessionTime)
     quoteDisplayElement.innerHTML = ''
     quote.split('').forEach(character => {
         const characterSpan = document.createElement('span')
@@ -53,21 +62,38 @@ async function generateNewQuote() {
     startTimer()
 }
 
-let startTime
+
 function startTimer(){
-    timerElement.innerText = 0
-    startTime = new Date()
-    setInterval(()=>{
-        if(pause == false){
-            timer.innerText = getTimerTime()
-        }
+    elapsedtime = 0
+    timerElement.innerText = elapsedtime
+
+    let startTime = new Date()
+    let endTime = new Date()
+    let currTime = new Date()
+    let countingTime = 0
+    
+   countingInterval = setInterval(()=>{
+       
+           if (pause == true){
+
+            timer.innerText = countingTime
+           }else{
+            countingTime = countingTime + 1
+            timer.innerText = countingTime
+           }
+            
+        
+            sessionTime = timer.innerText
         
     }, 1000)
 
+
+   return sessionTime
+
 }
 
-function getTimerTime(){ 
-    return Math.floor((new Date() - startTime) / 1000)
+function getTimerTime(startTime, currTime){ 
+    return Math.floor((currTime - startTime) / 1000)
 }
 
 
@@ -80,10 +106,27 @@ function pauseGame(){
      quoteInputElement.disabled = true
  
     }else{
-        pause = false;
+    pause = false;
      pauseElement.innerHTML = 'Pause'
      quoteInputElement.disabled = false
     }
      
  
+ }
+
+ function wordsSplit(word){
+    return word.split(' ').filter(function(num) {
+        return num != ''
+       }).length
+ }
+
+
+ function wpmCount(wordCount, sessionTime){
+    if (sessionTime != 0){
+        wpm.innerText = Math.round(wordCount/(sessionTime)*60)
+    }else{
+        wpm.innerText = 0
+    }
+
+    
  }
