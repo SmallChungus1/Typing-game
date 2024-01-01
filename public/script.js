@@ -50,7 +50,7 @@ function getQuote(){
 async function generateNewQuote() {
     const quote = await getQuote()
     wordCount = wordsSplit(quote)
-    wpmCount(wordCount, sessionTime)
+    
     quoteDisplayElement.innerHTML = ''
     quote.split('').forEach(character => {
         const characterSpan = document.createElement('span')
@@ -59,7 +59,8 @@ async function generateNewQuote() {
         quoteDisplayElement.appendChild(characterSpan)
     })
     quoteInputElement.value = null
-    startTimer()
+    sessionTimeCurr = startTimer()
+    wpmCount(wordCount, sessionTimeCurr)
 }
 
 
