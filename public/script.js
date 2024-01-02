@@ -9,6 +9,9 @@ let correct = true
 let pause = false
 let sessionTime = 0
 let countingInterval
+let elapsedtime = 0
+let wordCount = 0
+let currAudioID
 
 
 quoteInputElement.addEventListener('input', ()=> {
@@ -48,6 +51,8 @@ function getQuote(){
 }
 
 async function generateNewQuote() {
+    elapsedtime = 0
+    wordCount = 0
     const quote = await getQuote()
     wordCount = wordsSplit(quote)
     
@@ -66,27 +71,25 @@ async function generateNewQuote() {
 
 function startTimer(){
     elapsedtime = 0
+
     timerElement.innerText = elapsedtime
 
     let startTime = new Date()
     let endTime = new Date()
     let currTime = new Date()
-    let countingTime = 0
     
    countingInterval = setInterval(()=>{
-       
-           if (pause == true){
 
-            timer.innerText = countingTime
+           if (pause){
+            timer.innerText = Math.floor(elapsedtime/10)
+           // timer.innerText = elapsedtime
            }else{
-            countingTime = countingTime + 1
-            timer.innerText = countingTime
+            elapsedtime++
+            timer.innerText = Math.floor(elapsedtime/10)
+            //timer.innerText = elapsedtime
            }
-            
-        
-            sessionTime = timer.innerText
-        
-    }, 1000)
+            sessionTime = elapsedtime
+    }, 100)
 
 
    return sessionTime
@@ -102,7 +105,7 @@ generateNewQuote()
 
 function pauseGame(){
     if(pause == false){
-     pause = true;
+     pause = true
      pauseElement.innerHTML = 'Resume'
      quoteInputElement.disabled = true
  
@@ -124,10 +127,51 @@ function pauseGame(){
 
  function wpmCount(wordCount, sessionTime){
     if (sessionTime != 0){
-        wpm.innerText = Math.round(wordCount/(sessionTime)*60)
+        wpmCalc = Math.round(wordCount/(sessionTime)*600)
+        wpm.innerText = `${wpmCalc}, Words: ${wordCount}, time: ${sessionTime}`
     }else{
         wpm.innerText = 0
     }
 
+
+ }
+
+
+ //main page audio section
+
+ function playSound(audioID){
+    if(currAudioID){
+        pauseSound(currAudioID)
+    }else{
+
+    }
+    currAudioID = audioID
+    bkgdAudio = document.getElementById(audioID)
+    bkgdAudio.play()
     
  }
+
+ function pauseSound(audioID){
+    bkgdAudio = document.getElementById(audioID)
+    bkgdAudio.pause()
+ }
+
+ 
+const allAudioBtns = document.getElementsByName("audioPlayBtn")
+let audioID
+for (const aBtn of allAudioBtns){
+    aBtn.addEventListener("click",()=>{
+        audioID = aBtn.value
+        if(audioID === 'pauseAudio'){
+            pauseSound(currAudioID)
+        }else{
+            playSound(audioID)
+        }
+        
+    })
+}
+
+    
+
+
+

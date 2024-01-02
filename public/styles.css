@@ -82,7 +82,8 @@ font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 .wpm-container{
     background-color:aliceblue;
     padding: 1rem;
-   border-radius: 1.2rem;
+    border: 5px solid #F0DB4F;
+    border-radius: 1.2rem;
     width: 150px;
     height: 150px;
     max-height: 90%;
@@ -101,5 +102,18 @@ font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 
 }
 
+.audioPlayBox{
+    color: #F0DB4F;
+    padding: 1rem;
+    border: solid white;
+    border-radius: 1.2rem;
+    width: 200x;
+    height: 200px;
+    max-height: 90%;
+    max-width: 90%;
+}
 
+.wpm-container, .audioPlayBox, .container {
+    margin: 20px; 
+}
 
