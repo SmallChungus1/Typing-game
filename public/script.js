@@ -12,7 +12,7 @@ let countingInterval
 let elapsedtime = 0
 let wordCount = 0
 let currAudioID
-
+let currVideoID
 
 quoteInputElement.addEventListener('input', ()=> {
     const arrayChar = quoteDisplayElement.querySelectorAll('span')
@@ -139,21 +139,31 @@ function pauseGame(){
 
  //main page audio section
 
- function playSound(audioID){
+ function playSound(audioID, videoID){
     if(currAudioID){
-        pauseSound(currAudioID)
-    }else{
-
+        pauseSound(currAudioID, currVideoID)
     }
     currAudioID = audioID
+    currVideoID = videoID
     bkgdAudio = document.getElementById(audioID)
+    bkgdVideo = document.getElementById(videoID)
+    bkgdVideo.style.display = 'block';
     bkgdAudio.play()
+    bkgdVideo.play()
     
  }
 
- function pauseSound(audioID){
-    bkgdAudio = document.getElementById(audioID)
-    bkgdAudio.pause()
+ function pauseSound(audioID, videoID){
+    if(!audioID && !videoID){
+
+    }else{
+        bkgdAudio = document.getElementById(audioID)
+        bkgdVideo = document.getElementById(videoID)
+        bkgdAudio.pause()
+        bkgdVideo.pause()
+        bkgdVideo.style.display = 'none';
+    }
+  
  }
 
  
@@ -161,11 +171,13 @@ const allAudioBtns = document.getElementsByName("audioPlayBtn")
 let audioID
 for (const aBtn of allAudioBtns){
     aBtn.addEventListener("click",()=>{
-        audioID = aBtn.value
+        splitID = aBtn.value.split("-")
+        audioID = splitID[0]
+        videoID = splitID[1]
         if(audioID === 'pauseAudio'){
-            pauseSound(currAudioID)
+            pauseSound(currAudioID, currVideoID)
         }else{
-            playSound(audioID)
+            playSound(audioID, videoID)
         }
         
     })

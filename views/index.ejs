@@ -12,11 +12,11 @@
     <div class="timer" id="timer"></div>
     <div class="audioPlayBox">
         <p>Play audio!</p>
-        <input type="radio" id="rainPlayBtn" name="audioPlayBtn" value="rainAudio">
+        <input type="radio" id="rainPlayBtn" name="audioPlayBtn" value="rainAudio-rainVideo">
         <label for="rainPlayBtn">Play Rain Sounds</label><br>
-        <input type="radio" id="classicalMusBtn" name="audioPlayBtn" value="classicalMusic">
+        <input type="radio" id="classicalMusBtn" name="audioPlayBtn" value="classicalMusic-chillVideo">
         <label for="classicalMusBtn">Play Classical Music</label><br>
-        <input type="radio" id="bridPlayBtn" name="audioPlayBtn" value="birdAudio">
+        <input type="radio" id="bridPlayBtn" name="audioPlayBtn" value="birdAudio-natureVideo">
         <label for="birdAudio">Play Birds Audio</label><br>
         <input type="radio" id="pauseAudioBtn" name="audioPlayBtn" value="pauseAudio">
         <label for="pauseAudioBtn">Pause</label>
@@ -48,7 +48,18 @@
     <audio id="birdAudio" loop>
         <source src="/birdsAudio.wav" type="audio/mp3">
     </audio>
+
+    <video class="bkgdVideo" muted loop id="rainVideo">
+        <source src="/rainVideo.mp4" type="video/mp4">
+    </video>
+
+    <video class="bkgdVideo" muted loop id="natureVideo">
+        <source src="/natureVideo.mp4" type="video/mp4">
+    </video>
     
+    <video class="bkgdVideo" muted loop id="chillVideo">
+        <source src="/snowVideo.mp4" type="video/mp4">
+    </video>
     
 </body>
 </html>
